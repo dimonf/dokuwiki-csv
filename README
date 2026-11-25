@@ -1,5 +1,7 @@
 CSV Plugin for DokuWiki
 
+Modification of original A.Ghor plugin.
+
 Displays a CSV file, or inline CSV data, as a table
 
 All documentation for this plugin can be found at
