@@ -14,7 +14,7 @@ use dokuwiki\Utf8\Clean;
 /**
  * Implement CSV parser and other helpers
  */
-class helper_plugin_csv extends Plugin
+class helper_plugin_csvmod extends Plugin
 {
     /**
      * Returns the default options
@@ -53,7 +53,7 @@ class helper_plugin_csv extends Plugin
         global $ID;
 
         // defaults
-        $opt = helper_plugin_csv::getDefaultOpt();
+        $opt = helper_plugin_csvmod::getDefaultOpt();
 
         $filters = [];
         // parse options - https://regex101.com/r/tNdS9P/3/
@@ -155,7 +155,7 @@ class helper_plugin_csv extends Plugin
         $data = [];
 
         // get the first row - it will define the structure
-        $row = helper_plugin_csv::csvExplodeRow($content, $opt['delim'], $opt['enclosure'], $opt['escape']);
+        $row = helper_plugin_csvmod::csvExplodeRow($content, $opt['delim'], $opt['enclosure'], $opt['escape']);
         $maxcol = count($row);
         $line = 0;
 
@@ -188,7 +188,7 @@ class helper_plugin_csv extends Plugin
             }
 
             $line++;
-            $row = helper_plugin_csv::csvExplodeRow($content, $opt['delim'], $opt['enclosure'], $opt['escape']);
+            $row = helper_plugin_csvmod::csvExplodeRow($content, $opt['delim'], $opt['enclosure'], $opt['escape']);
         }
 
         return $data;

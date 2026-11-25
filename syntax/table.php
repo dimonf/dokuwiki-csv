@@ -14,7 +14,7 @@ use dokuwiki\Extension\SyntaxPlugin;
 /**
  * Display CSV data as table
  */
-class syntax_plugin_csv_table extends SyntaxPlugin
+class syntax_plugin_csvmod_table extends SyntaxPlugin
 {
     /** @inheritdoc */
     public function getType()
@@ -37,7 +37,7 @@ class syntax_plugin_csv_table extends SyntaxPlugin
     /** @inheritdoc */
     public function connectTo($mode)
     {
-        $this->Lexer->addSpecialPattern('<csv[^>]*>.*?(?:<\/csv>)', $mode, 'plugin_csv_table');
+        $this->Lexer->addSpecialPattern('<csv[^>]*>.*?(?:<\/csv>)', $mode, 'plugin_csvmod_table');
     }
 
     /** @inheritdoc */
@@ -46,7 +46,7 @@ class syntax_plugin_csv_table extends SyntaxPlugin
         $match = substr($match, 4, -6); // <csv ... </csv>
 
         [$optstr, $content] = explode('>', $match, 2);
-        $opt = helper_plugin_csv::parseOptions($optstr);
+        $opt = helper_plugin_csvmod::parseOptions($optstr);
         $opt['content'] = $content;
 
         return $opt;
@@ -60,7 +60,7 @@ class syntax_plugin_csv_table extends SyntaxPlugin
         // load file data
         if ($opt['file']) {
             try {
-                $opt['content'] = helper_plugin_csv::loadContent($opt['file']);
+                $opt['content'] = helper_plugin_csvmod::loadContent($opt['file']);
                 if (!media_ispublic($opt['file'])) $renderer->info['cache'] = false;
             } catch (\Exception $e) {
                 $renderer->cdata($e->getMessage());
@@ -76,7 +76,7 @@ class syntax_plugin_csv_table extends SyntaxPlugin
             return true;
         }
 
-        $data = helper_plugin_csv::prepareData($content, $opt);
+        $data = helper_plugin_csvmod::prepareData($content, $opt);
 
         if (empty($data)) {
             $message = $this->getLang('no_result');

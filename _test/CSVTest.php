@@ -5,7 +5,7 @@ namespace dokuwiki\plugin\csv\test;
 use DokuWikiTest;
 
 /**
- * @group plugin_csv
+ * @group plugin_csvmod
  * @group plugins
  */
 class CSVTest extends DokuWikiTest
@@ -66,7 +66,7 @@ class CSVTest extends DokuWikiTest
         // read all data
         $result = [];
         while ($csvdata != '') {
-            $line = \helper_plugin_csv::csvExplodeRow($csvdata, $delim, $enc, $esc);
+            $line = \helper_plugin_csvmod::csvExplodeRow($csvdata, $delim, $enc, $esc);
             if ($line !== false) array_push($result, $line);
         }
 
@@ -80,9 +80,9 @@ class CSVTest extends DokuWikiTest
     {
         $contents = file_get_contents(__DIR__ . '/avengers.csv');
 
-        $opt = \helper_plugin_csv::getDefaultOpt();
+        $opt = \helper_plugin_csvmod::getDefaultOpt();
 
-        $data = \helper_plugin_csv::prepareData($contents, $opt);
+        $data = \helper_plugin_csvmod::prepareData($contents, $opt);
         $this->assertSame(174, count($data), 'number of rows');
         $this->assertSame(21, count($data[0]), 'number of columns');
     }
@@ -94,15 +94,15 @@ class CSVTest extends DokuWikiTest
     {
         $contents = file_get_contents(__DIR__ . '/avengers.csv');
 
-        $opt = \helper_plugin_csv::getDefaultOpt();
+        $opt = \helper_plugin_csvmod::getDefaultOpt();
         $opt['filter'][4] = '^FEMALE$';
 
-        $data = \helper_plugin_csv::prepareData($contents, $opt);
+        $data = \helper_plugin_csvmod::prepareData($contents, $opt);
         $this->assertSame(59, count($data), 'number of rows');
         $this->assertSame(21, count($data[0]), 'number of columns');
 
         $opt['filter'][1] = '^.*?jessica.*?$';
-        $data = \helper_plugin_csv::prepareData($contents, $opt);
+        $data = \helper_plugin_csvmod::prepareData($contents, $opt);
         $this->assertSame(3, count($data), 'number of rows');
         $this->assertSame(21, count($data[0]), 'number of columns');
 
@@ -139,11 +139,11 @@ class CSVTest extends DokuWikiTest
      */
     public function testOptions($input, $expect)
     {
-        $opt = \helper_plugin_csv::getDefaultOpt();
+        $opt = \helper_plugin_csvmod::getDefaultOpt();
         unset($opt['output']);
 
         $expect = array_merge($opt, $expect);
-        $result = \helper_plugin_csv::parseOptions($input);
+        $result = \helper_plugin_csvmod::parseOptions($input);
 
         $this->assertEquals($expect, $result);
     }

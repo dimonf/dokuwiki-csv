@@ -7,7 +7,7 @@ use DokuWikiTest;
 /**
  * General tests for the csv plugin
  *
- * @group plugin_csv
+ * @group plugin_csvmod
  * @group plugins
  */
 class GeneralTest extends DokuWikiTest

@@ -11,7 +11,7 @@ use dokuwiki\Extension\SyntaxPlugin;
 /**
  * Display a single CSV value
  */
-class syntax_plugin_csv_value extends SyntaxPlugin
+class syntax_plugin_csvmod_value extends SyntaxPlugin
 {
     protected $rowcache = [];
 
@@ -36,14 +36,14 @@ class syntax_plugin_csv_value extends SyntaxPlugin
     /** @inheritdoc */
     public function connectTo($mode)
     {
-        $this->Lexer->addSpecialPattern('<csvval[^>]*>', $mode, 'plugin_csv_value');
+        $this->Lexer->addSpecialPattern('<csvval[^>]*>', $mode, 'plugin_csvmod_value');
     }
 
     /** @inheritdoc */
     public function handle($match, $state, $pos, Doku_Handler $handler)
     {
         $optstr = substr($match, 7, -1); // <csvval ... >
-        $opt = helper_plugin_csv::parseOptions($optstr);
+        $opt = helper_plugin_csvmod::parseOptions($optstr);
 
         return $opt;
     }
@@ -63,11 +63,11 @@ class syntax_plugin_csv_value extends SyntaxPlugin
         $cache = md5(serialize($opt));
         if (!isset($this->rowcache[$cache])) {
             try {
-                $content = helper_plugin_csv::loadContent($opt['file']);
+                $content = helper_plugin_csvmod::loadContent($opt['file']);
             } catch (\Exception $e) {
                 return $e->getMessage();
             }
-            $this->rowcache[$cache] = helper_plugin_csv::prepareData($content, $opt);
+            $this->rowcache[$cache] = helper_plugin_csvmod::prepareData($content, $opt);
         }
 
         if (isset($this->rowcache[$cache][$r][$c])) {
