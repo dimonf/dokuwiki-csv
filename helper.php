@@ -49,7 +49,8 @@ class helper_plugin_csv extends Plugin
      */
     public static function parseOptions($optstr)
     {
-        global $INFO;
+        //global $INFO;
+        global $ID;
 
         // defaults
         $opt = helper_plugin_csv::getDefaultOpt();
@@ -83,7 +84,7 @@ class helper_plugin_csv extends Plugin
 
         // resolve local files
         if ($opt['file'] !== '' && !preg_match('/^https?:\/\//i', $opt['file'])) {
-            $resolver = new MediaResolver($INFO['id'] ?? '');
+            $resolver = new MediaResolver($ID ?? '');
             $opt['file'] = $resolver->resolveId($opt['file']);
         }
 
